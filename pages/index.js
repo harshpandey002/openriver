@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
+import { useRef, useState } from "react";
 import { FaEthereum } from "react-icons/fa";
 import { formatAddress } from "../helpers/utils";
 import useThirdWeb from "../hooks/useThirdWeb";
@@ -13,7 +14,6 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <ConnectWallet />
-      <p>{address}</p>
       <div className="listings">
         {isLoading ? (
           <div className="dot-pulse"></div>
