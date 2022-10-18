@@ -49,3 +49,101 @@ a {
   font-weight: 500;
   color: black;
 }
+
+button {
+  background-color: green;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: rgb(2, 107, 2);
+}
+
+/**
+ * ==============================================
+ * Dot Pulse
+ * ==============================================
+ */
+.dot-pulse {
+  --dot-color: black;
+  position: relative;
+  left: -9999px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: var(--dot-color);
+  color: var(--dot-color);
+  box-shadow: 9999px 0 0 -5px var(--dot-color);
+  animation: dotPulse 1.5s infinite linear;
+  animation-delay: 0.25s;
+}
+
+.dot-pulse::before,
+.dot-pulse::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: var(--dot-color);
+  color: var(--dot-color);
+}
+
+.dot-pulse::before {
+  box-shadow: 9984px 0 0 -5px var(--dot-color);
+  animation: dotPulseBefore 1.5s infinite linear;
+  animation-delay: 0s;
+}
+
+.dot-pulse::after {
+  box-shadow: 10014px 0 0 -5px var(--dot-color);
+  animation: dotPulseAfter 1.5s infinite linear;
+  animation-delay: 0.5s;
+}
+
+@keyframes dotPulseBefore {
+  0% {
+    box-shadow: 9984px 0 0 -5px var(--dot-color);
+  }
+  30% {
+    box-shadow: 9984px 0 0 2px var(--dot-color);
+  }
+  60%,
+  100% {
+    box-shadow: 9984px 0 0 -5px var(--dot-color);
+  }
+}
+
+@keyframes dotPulse {
+  0% {
+    box-shadow: 9999px 0 0 -5px var(--dot-color);
+  }
+  30% {
+    box-shadow: 9999px 0 0 2px var(--dot-color);
+  }
+  60%,
+  100% {
+    box-shadow: 9999px 0 0 -5px var(--dot-color);
+  }
+}
+
+@keyframes dotPulseAfter {
+  0% {
+    box-shadow: 10014px 0 0 -5px var(--dot-color);
+  }
+  30% {
+    box-shadow: 10014px 0 0 2px var(--dot-color);
+  }
+  60%,
+  100% {
+    box-shadow: 10014px 0 0 -5px var(--dot-color);
+  }
+}
