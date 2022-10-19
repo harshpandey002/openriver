@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Layout from "@/components/Layout";
 import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { useRef, useState } from "react";
@@ -12,20 +13,35 @@ export default function Home() {
   const address = useAddress();
 
   return (
-    <div className={styles.container}>
-      <ConnectWallet />
-      <div className="listings">
-        {isLoading ? (
-          <div className="dot-pulse"></div>
-        ) : !!listings.length ? (
-          listings.map((listing) => (
-            <ListingCard key={listing.id} listing={listing} />
-          ))
-        ) : (
-          <p>No Item Listed</p>
-        )}
+    <Layout>
+      <div className={styles.container}>
+        <div className="listings">
+          {isLoading ? (
+            <div className="dot-pulse"></div>
+          ) : !!listings.length ? (
+            <>
+              {listings.map((listing) => (
+                <ListingCard key={listing.id} listing={listing} />
+              ))}
+              {listings.map((listing) => (
+                <ListingCard key={listing.id} listing={listing} />
+              ))}
+              {listings.map((listing) => (
+                <ListingCard key={listing.id} listing={listing} />
+              ))}
+              {listings.map((listing) => (
+                <ListingCard key={listing.id} listing={listing} />
+              ))}
+              {listings.map((listing) => (
+                <ListingCard key={listing.id} listing={listing} />
+              ))}
+            </>
+          ) : (
+            <p>No Item Listed</p>
+          )}
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 

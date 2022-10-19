@@ -1,0 +1,9 @@
+.container {
+  padding: 2rem;
+}
+
+.children {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 4rem;
+}

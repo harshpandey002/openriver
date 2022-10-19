@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo img {
+  width: 40px;
+}
+
+.logo h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 3rem;
+}
+
+.links li {
+  font-weight: 500;
+}
+
+.links button {
+  border-radius: 0;
+  outline: none !important;
+}
