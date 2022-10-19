@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Hero from "@/components/Hero";
 import Layout from "@/components/Layout";
 import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <Layout>
       <div className={styles.container}>
+        <Hero />
         <div className="listings">
           {isLoading ? (
             <div className="dot-pulse"></div>
