@@ -6,3 +6,56 @@
   flex-direction: column;
   gap: 2rem;
 }
+
+.heading {
+  margin-top: 2rem;
+}
+
+.heading h2 {
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 400;
+  text-align: center;
+}
+
+.heading p {
+  color: gray;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.listingHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.listingHeader h3 {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.listingHeader button {
+  padding: 8px 20px;
+  border: 1px solid black;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.listingHeader button:hover {
+  background-color: black;
+  color: white;
+}
+
+.listings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}

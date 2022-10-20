@@ -25,43 +25,12 @@ a {
   text-decoration: none;
 }
 
-.listings {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-
-.card {
-  width: 300px;
-  border-radius: 10px;
-  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-  padding: 1rem;
-}
-
-.card img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.card > p {
-  font-size: 14px;
-  color: gray;
-}
-
-#NFTName {
-  margin-top: 4px;
-  font-size: 20px;
-  font-weight: 500;
-  color: black;
-}
-
-/**
+/* 
  * ==============================================
  * Dot Pulse
- * ==============================================
+ * ============================================== 
  */
+
 .dot-pulse {
   --dot-color: black;
   position: relative;
