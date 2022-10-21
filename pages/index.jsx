@@ -2,18 +2,22 @@
 import Hero from "@/components/Hero";
 import Layout from "@/components/Layout";
 import ListingCard from "@/components/ListingCard";
+import MintModal from "@/components/MintModal";
 import styles from "@/styles/Home.module.css";
 import { useAddress } from "@thirdweb-dev/react";
+import { useState } from "react";
 import useThirdWeb from "../hooks/useThirdWeb";
 
 export default function Home() {
+  const [showMintModal, setShowMintModal] = useState(true);
+
   return (
     <Layout>
       <div className={styles.container}>
         <Hero />
         <div className={styles.heading}>
           <h2>
-            Tranding NFTs <br />
+            Trending NFTs <br />
             Just For You
           </h2>
           <p>
@@ -27,6 +31,12 @@ export default function Home() {
         </div>
         <Listings />
       </div>
+      <MintModal
+        show={showMintModal}
+        onClose={() => {
+          setShowMintModal(false);
+        }}
+      />
     </Layout>
   );
 }

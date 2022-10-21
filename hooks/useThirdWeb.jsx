@@ -38,7 +38,7 @@ export default function useThirdWeb() {
   const createCollection = async () => {
     try {
       const contractAddress = await sdk.deployer.deployNFTCollection({
-        name: "New Collection",
+        name: "OpenRiver",
         // this address comes from connected wallet address
         primary_sale_recipient: address,
       });
