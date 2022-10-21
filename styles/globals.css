@@ -67,8 +67,13 @@ textarea:focus {
 
 .input-group label {
   width: max-content;
+  color: #313131;
+  font-size: 16px;
+}
+
+.input-group p {
+  font-size: 12px;
   color: gray;
-  font-size: 14px;
 }
 
 .overlay {
@@ -81,6 +86,7 @@ textarea:focus {
   backdrop-filter: blur(0px);
   pointer-events: none;
   transition: all 0.3s ease-out;
+  z-index: 9;
 }
 
 .showOverlay {

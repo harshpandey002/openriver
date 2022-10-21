@@ -2,12 +2,10 @@
 import styles from "@/styles/MintModal.module.css";
 import { useAddress, useContract } from "@thirdweb-dev/react";
 import { useCallback, useEffect, useState } from "react";
-import ReactDOM from "react-dom";
 import { useDropzone } from "react-dropzone";
 import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
 
 export default function MintModal({ show, onClose }) {
-  const [isBrowser, setIsBrowser] = useState(false);
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
   const [formData, setFormData] = useState({
@@ -31,15 +29,10 @@ export default function MintModal({ show, onClose }) {
     maxFiles: 1,
   });
 
-  useEffect(() => {
-    setIsBrowser(true);
-  }, []);
-
   const handleClose = () => {
     setFormData({
       name: "",
-      email: "",
-      password: "",
+      description: "",
     });
     onClose();
   };
@@ -94,7 +87,7 @@ export default function MintModal({ show, onClose }) {
             <p>Contract 0x4C4c...43d9</p>
           </span>
 
-          <span id={styles.close}>
+          <span onClick={handleClose} id={styles.close}>
             <AiOutlineClose />
           </span>
         </div>
@@ -123,29 +116,32 @@ export default function MintModal({ show, onClose }) {
               onChange={handleChange}
             />
           </div>
-          <div className={styles.imageSection}>
-            <div
-              style={{
-                borderColor: isDragAccept ? "#134cae" : "",
-                borderWidth: image ? 0 : 1,
-              }}
-              className={styles.dropzone}
-              {...getRootProps()}
-            >
-              <input {...getInputProps()} />
-              {image ? (
-                <img src={image} alt="NFT Image" />
-              ) : (
-                <>
-                  <AiOutlineCloudUpload id={styles.uploadIcon} />
-                  <p>Upload Image</p>
-                </>
-              )}
+          <div className="input-group">
+            <label htmlFor="image">Media</label>
+            <div className={styles.imageSection}>
+              <div
+                style={{
+                  borderColor: isDragAccept ? "#134cae" : "",
+                  borderWidth: image ? 0 : 1,
+                }}
+                className={styles.dropzone}
+                {...getRootProps()}
+              >
+                <input {...getInputProps()} />
+                {image ? (
+                  <img src={image} alt="NFT Image" />
+                ) : (
+                  <>
+                    <AiOutlineCloudUpload id={styles.uploadIcon} />
+                    <p>Upload Image</p>
+                  </>
+                )}
+              </div>
+              <button onClick={open}>Select File</button>
             </div>
-            <button onClick={open}>Select File</button>
           </div>
           <div className={styles.cta}>
-            <button disabled={loading} type="button">
+            <button onClick={handleClose} disabled={loading} type="button">
               Close
             </button>
 

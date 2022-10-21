@@ -2,6 +2,7 @@
 import Hero from "@/components/Hero";
 import Layout from "@/components/Layout";
 import ListingCard from "@/components/ListingCard";
+import ListModal from "@/components/ListModal";
 import styles from "@/styles/Home.module.css";
 import { useContract } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
@@ -35,6 +36,12 @@ export default function Home() {
 
   return (
     <Layout>
+      <ListModal
+        show={showListModal}
+        onClose={() => {
+          setShowListModal(false);
+        }}
+      />
       <div className={styles.container}>
         <Hero />
         <div className={styles.heading}>
@@ -49,7 +56,7 @@ export default function Home() {
         </div>
         <div className={styles.listingHeader}>
           <h3>Discover</h3>
-          <button>List Your NFT</button>
+          <button onClick={() => setShowListModal(true)}>List Your NFT</button>
         </div>
         <Listings listings={listings} isLoading={isLoading} />
       </div>
