@@ -20,6 +20,7 @@ export default function MintModal({ show, onClose }) {
   const { contract: collection } = useContract(
     "0xC4A0468Cd9c06D1D398E27d7C84758d75564f107"
   );
+
   const onDrop = useCallback((acceptedFiles) => {
     handleDrop(acceptedFiles);
   }, []);
@@ -55,11 +56,7 @@ export default function MintModal({ show, onClose }) {
     };
 
     try {
-      const tx = await collection.mintTo(address, metadata);
-      let nft = await tx.data();
-
-      console.log(tx);
-      console.log(nft);
+      await collection.mintTo(address, metadata);
     } catch (error) {
       console.log(error);
     }
@@ -84,10 +81,13 @@ export default function MintModal({ show, onClose }) {
     });
   };
 
-  const modalContent = show ? (
+  return (
     <>
-      <div className="overlay" onClick={handleClose} />
-      <div className={styles.modal}>
+      <div
+        className={`overlay ${show ? "showOverlay" : ""}`}
+        onClick={handleClose}
+      />
+      <div className={`${styles.modal}  ${show ? styles.showModal : ""}`}>
         <div className={styles.header}>
           <span className={styles.title}>
             <p>Mint Token</p>
@@ -156,16 +156,7 @@ export default function MintModal({ show, onClose }) {
         </form>
       </div>
     </>
-  ) : null;
-
-  if (isBrowser) {
-    return ReactDOM.createPortal(
-      modalContent,
-      document.getElementById("modal-root")
-    );
-  } else {
-    return null;
-  }
+  );
 }
 
 function Loader() {

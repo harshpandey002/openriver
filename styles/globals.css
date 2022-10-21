@@ -77,8 +77,16 @@ textarea:focus {
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.463);
+  background-color: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  pointer-events: none;
+  transition: all 0.3s ease-out;
+}
+
+.showOverlay {
+  background-color: rgba(0, 0, 0, 0.46);
   backdrop-filter: blur(10px);
+  pointer-events: all;
 }
 
 .required {

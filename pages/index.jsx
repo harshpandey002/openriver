@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showListModal, setShowListModal] = useState(false);
 
   const { contract } = useContract(
     "0x29563a327112f458b25Fb42A52cf081A0C0d51ba"

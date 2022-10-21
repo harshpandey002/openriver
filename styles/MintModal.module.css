@@ -9,6 +9,12 @@
   display: flex;
   flex-direction: column;
   box-shadow: -2px 0px 15px rgba(0, 0, 0, 0.164);
+  translate: 100% 0;
+  transition: all 0.3s ease-out;
+}
+
+.showModal {
+  translate: 0 0;
 }
 
 .header {
