@@ -20,6 +20,7 @@ body {
 html,
 body,
 input,
+textarea,
 button {
   font-family: "Poppins", sans-serif;
 }
@@ -37,12 +38,11 @@ a {
 input,
 textarea {
   border: 1px solid #cfcfcf;
-  background-color: transparent;
+  background-color: #f6f6f6;
   outline: none;
   padding: 4px 8px;
   border-radius: 3px;
   font-size: 16px;
-  background-color: #f6f6f6;
   transition: all 0.3s ease;
   resize: none;
 }
@@ -50,6 +50,7 @@ textarea {
 input:hover,
 textarea:hover {
   border-color: var(--primary) !important;
+  background-color: #eaeaea;
 }
 
 input:focus,

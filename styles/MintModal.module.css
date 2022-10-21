@@ -51,6 +51,7 @@
   padding-bottom: 0.5rem;
   margin-bottom: 2rem;
   border-bottom: 1px solid #d0d0d0;
+  color: #454545;
 }
 
 .form {
@@ -70,13 +71,76 @@
 .cta button {
   padding: 6px 16px;
   font-size: 16px;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
   outline: none;
   border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.cta button:nth-child(1) {
+  background-color: transparent;
+  border-color: #aeaeae;
+}
+
+.cta button:nth-child(1):hover {
+  background-color: #f6f6f6;
+  /* border-color: transparent; */
 }
 
 .cta button:last-child {
   background-color: var(--primary);
   color: white;
+}
+
+.dropzone {
+  background-color: #f6f6f6;
+  border: 2px dashed #c5c5c5;
+  color: gray;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dropzone:hover {
+  color: black;
+  border-color: var(--primary);
+}
+
+.dropzone:focus,
+.dropzone:active {
+  border-color: var(--primary) !important;
+  background-color: transparent;
+}
+
+#uploadIcon {
+  font-size: 28px;
+  color: gray;
+  transition: all 0.3s ease;
+}
+
+.dropzone:hover #uploadIcon {
+  color: var(--primary);
+}
+
+.imageSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.imageSection button {
+  padding: 4px 12px;
+  border-radius: 4px;
+  background-color: var(--primary);
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
 }
