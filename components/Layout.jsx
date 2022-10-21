@@ -1,9 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from "@/styles/Layout.module.css";
 import Head from "next/head";
+import { useState } from "react";
 import Header from "./Header";
+import MintModal from "./MintModal";
 
 const Layout = ({ title, description, children }) => {
+  const [showMintModal, setShowMintModal] = useState(false);
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -13,9 +17,15 @@ const Layout = ({ title, description, children }) => {
       </Head>
 
       <div className={styles.container}>
-        <Header />
+        <Header setShowMintModal={setShowMintModal} />
         <div className={styles.children}>{children}</div>
       </div>
+      <MintModal
+        show={showMintModal}
+        onClose={() => {
+          setShowMintModal(false);
+        }}
+      />
     </div>
   );
 };

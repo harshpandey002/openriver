@@ -13,15 +13,17 @@ export default function useThirdWeb() {
   );
 
   const { contract: collectionContract } = useContract(
-    "0xb5018A3093B7d80cc12263C3e19Cd9fd70C57Ea2"
+    "0xC4A0468Cd9c06D1D398E27d7C84758d75564f107"
   );
 
   useEffect(() => {
+    console.log(contract);
     if (!contract) return;
     getListings();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract]);
 
+  //! Fetching all the listings
   const getListings = async () => {
     try {
       if (!!listings.length) throw "Restricting re-fetch";
@@ -71,25 +73,24 @@ export default function useThirdWeb() {
   };
 
   //! Mint new NFT to collection
-  const mintNft = async () => {
+  const mintNft = async ({ name, description, image }) => {
     // Custom metadata of the NFT, note that you can fully customize this metadata with other properties.
     const metadata = {
-      name: "Code pro",
-      description: "Mint NFT by code",
-      image:
-        "https://img.seadn.io/files/60c04b8fdac7bc63599741fe54f81ae6.png?fit=max&w=2000", // This can be an image url or file
+      name,
+      description,
+      image, // This can be an image url or file
     };
-
     try {
-      console.log(contract);
       const tx = await collectionContract.mintTo(address, metadata);
       const tokenId = tx.id; // the id of the NFT minted
-      const nft = await tx.data(); // (optional) fetch details of minted NFT
+      let nft = await tx.data(); // (optional) fetch details of minted NFT
 
       console.log(tx);
       console.log(nft);
+      return nft;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 

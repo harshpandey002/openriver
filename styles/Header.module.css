@@ -30,6 +30,7 @@
 
 .links li {
   font-weight: 500;
+  cursor: pointer;
 }
 
 .links button {

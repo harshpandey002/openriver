@@ -3,7 +3,7 @@ import React from "react";
 import styles from "@/styles/Header.module.css";
 import { ConnectWallet } from "@thirdweb-dev/react";
 
-export default function Header() {
+export default function Header({ setShowMintModal }) {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
@@ -11,8 +11,8 @@ export default function Header() {
         <h2>OpenRiver</h2>
       </div>
       <ul className={styles.links}>
-        <li>Poll</li>
-        <li>Create Collection</li>
+        {/* <li>Poll</li> */}
+        <li onClick={() => setShowMintModal(true)}>Mint NFT</li>
         <li>
           <ConnectWallet />
         </li>
