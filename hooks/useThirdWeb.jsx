@@ -41,6 +41,7 @@ export default function useThirdWeb() {
     try {
       const contractAddress = await sdk.deployer.deployNFTCollection({
         name: "OpenRiver",
+        name: "RIVR",
         // this address comes from connected wallet address
         primary_sale_recipient: address,
       });
@@ -91,6 +92,25 @@ export default function useThirdWeb() {
     } catch (error) {
       console.log(error);
       throw error;
+    }
+  };
+
+  const getCollectionContract = async () => {
+    const url = `https://deep-index.moralis.io/api/v2/${address}/nft/collections?chain=mumbai`;
+
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "X-API-Key":
+            "8SdNPyuDmzLJLVhYIWuchPbkjSQ9CWuBNxrA4ZWjyj6dozJKqWpEqM2uyCJJSTdt",
+        },
+      });
+      const data = await res.json();
+      console.log(data.result[0].token_address);
+    } catch (error) {
+      console.log(error);
     }
   };
 

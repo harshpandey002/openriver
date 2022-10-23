@@ -4,13 +4,18 @@ import Layout from "@/components/Layout";
 import ListingCard from "@/components/ListingCard";
 import ListModal from "@/components/ListModal";
 import styles from "@/styles/Home.module.css";
-import { useContract } from "@thirdweb-dev/react";
+import { useAddress, useContract } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showListModal, setShowListModal] = useState(false);
+  const [collectionContract, setCollectionContract] = useState("");
+  const [nfts, setNfts] = useState([]);
+
+  const address = useAddress();
 
   const { contract } = useContract(
     "0x29563a327112f458b25Fb42A52cf081A0C0d51ba"
@@ -19,6 +24,8 @@ export default function Home() {
   useEffect(() => {
     if (!contract || isLoading) return;
     getListings();
+    getNFTs();
+    getCollectionContract();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract]);
 
@@ -34,6 +41,60 @@ export default function Home() {
     }
   };
 
+  const getNFTs = async () => {
+    const url = `https://deep-index.moralis.io/api/v2/${address}/nft?chain=mumbai&format=decimal`;
+
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "X-API-Key":
+            "8SdNPyuDmzLJLVhYIWuchPbkjSQ9CWuBNxrA4ZWjyj6dozJKqWpEqM2uyCJJSTdt",
+        },
+      });
+      const data = await res.json();
+
+      setNfts(
+        data.result.map((each) => ({
+          // label: JSON.parse(each.metadata).image,
+          label: JSON.parse(each.metadata),
+          value: {
+            tokenId: each.token_id,
+            tokenAddress: each.token_address,
+          },
+        }))
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCollectionContract = async () => {
+    const url = `https://deep-index.moralis.io/api/v2/${address}/nft/collections?chain=mumbai`;
+
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "X-API-Key":
+            "8SdNPyuDmzLJLVhYIWuchPbkjSQ9CWuBNxrA4ZWjyj6dozJKqWpEqM2uyCJJSTdt",
+        },
+      });
+      const data = await res.json();
+      let collectionAddr = "";
+      data.result.forEach((each) => {
+        if (each.symbol === "RIVR") {
+          collectionAddr = each.token_address;
+        }
+      });
+      setCollectionContract(collectionAddr);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Layout>
       <ListModal
@@ -41,6 +102,7 @@ export default function Home() {
         onClose={() => {
           setShowListModal(false);
         }}
+        nfts={nfts}
         getListings={getListings}
       />
       <div className={styles.container}>

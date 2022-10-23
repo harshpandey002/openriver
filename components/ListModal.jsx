@@ -7,13 +7,11 @@ import { useDropzone } from "react-dropzone";
 import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
 import { RadioButton } from "./RadioButton";
 
-export default function ListModal({ show, onClose, getListings }) {
-  const [isBrowser, setIsBrowser] = useState(false);
+export default function ListModal({ show, onClose, getListings, nfts }) {
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState("");
   const [formData, setFormData] = useState({
     price: "",
-    NFT: "first",
+    NFT: 0,
   });
 
   const address = useAddress();
@@ -25,6 +23,7 @@ export default function ListModal({ show, onClose, getListings }) {
   const handleClose = () => {
     setFormData({
       price: "",
+      NFT: 0,
     });
     onClose();
   };
@@ -32,10 +31,12 @@ export default function ListModal({ show, onClose, getListings }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(nfts[formData.NFT]);
+
     const listing = {
-      assetContractAddress: "0xb5018A3093B7d80cc12263C3e19Cd9fd70C57Ea2",
+      assetContractAddress: nfts[formData.NFT].value.tokenAddress,
       // token ID of the asset you want to list
-      tokenId: "2",
+      tokenId: nfts[formData.NFT].value.tokenId,
       // when should the listing open up for offers
       startTimestamp: new Date(),
       // how long the listing will be open for
@@ -83,33 +84,15 @@ export default function ListModal({ show, onClose, getListings }) {
         <h3 id={styles.meta}>Settings</h3>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.checks}>
-            <RadioButton
-              changed={handleChange}
-              id="1"
-              isSelected={formData.NFT === "first"}
-              label={
-                <img src="https://gateway.ipfscdn.io/ipfs/QmagA9DymDYWpYZR9AmbFsnpv7MDXJRgm3Y6KSwspozW2L/3d%20peep.png" />
-              }
-              value="first"
-            />
-            <RadioButton
-              changed={handleChange}
-              id="2"
-              isSelected={formData.NFT === "second"}
-              label={
-                <img src="https://gateway.ipfscdn.io/ipfs/QmagA9DymDYWpYZR9AmbFsnpv7MDXJRgm3Y6KSwspozW2L/3d%20peep.png" />
-              }
-              value="second"
-            />
-            <RadioButton
-              changed={handleChange}
-              id="3"
-              isSelected={formData.NFT === "third"}
-              label={
-                <img src="https://i.seadn.io/gae/GF-RZP-1uOyITE_OL6hLDjAHH1jetPDhxbgGwDF6zJeaYmsly5ff2zOU9W5xZdEY1IdE2Ku6YrBI5dVgoH5arQEziGVuKlosx4U4Dic?auto=format&w=1000" />
-              }
-              value="third"
-            />
+            {nfts.map((each, i) => (
+              <RadioButton
+                key={i + 1}
+                changed={handleChange}
+                id={i + 1}
+                isSelected={formData.NFT == i}
+                label={each.label}
+              />
+            ))}
           </div>
           <div className="input-group">
             <label className="required" htmlFor="price">
