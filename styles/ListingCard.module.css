@@ -1,13 +1,12 @@
 .container {
-  width: 300px;
+  /* width: 300px; */
   border-radius: 10px;
   box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;
   padding: 1rem;
 }
 
 .img {
-  width: 268px;
-  height: 268px;
+  width: 100%;
   border-radius: 10px;
   overflow: hidden;
   scale: 1.07;

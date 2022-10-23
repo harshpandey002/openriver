@@ -7,7 +7,7 @@ import { useDropzone } from "react-dropzone";
 import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
 import { RadioButton } from "./RadioButton";
 
-export default function ListModal({ show, onClose }) {
+export default function ListModal({ show, onClose, getListings }) {
   const [isBrowser, setIsBrowser] = useState(false);
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
@@ -31,6 +31,30 @@ export default function ListModal({ show, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const listing = {
+      assetContractAddress: "0xb5018A3093B7d80cc12263C3e19Cd9fd70C57Ea2",
+      // token ID of the asset you want to list
+      tokenId: "2",
+      // when should the listing open up for offers
+      startTimestamp: new Date(),
+      // how long the listing will be open for
+      listingDurationInSeconds: 86400,
+      // how many of the asset you want to list
+      quantity: 1,
+      // address of the currency contract that will be used to pay for the listing
+      currencyContractAddress: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      // how much the asset will be sold for
+      buyoutPricePerToken: formData.price,
+    };
+
+    try {
+      const tx = await contract.direct.createListing(listing);
+      console.log(tx);
+      getListings();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChange = (e) => {
@@ -94,6 +118,7 @@ export default function ListModal({ show, onClose }) {
             <input
               id="price"
               type="number"
+              min={1}
               name="price"
               value={formData.price}
               onChange={handleChange}

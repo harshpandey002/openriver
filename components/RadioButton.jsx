@@ -11,6 +11,7 @@ export const RadioButton = (props) => {
         value={value}
         type="radio"
         checked={isSelected}
+        hidden
       />
       <label htmlFor={id}>{label}</label>
     </div>

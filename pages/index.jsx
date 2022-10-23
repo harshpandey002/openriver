@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [listings, setListings] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [showListModal, setShowListModal] = useState(false);
 
   const { contract } = useContract(
@@ -17,14 +17,14 @@ export default function Home() {
   );
 
   useEffect(() => {
-    if (!contract) return;
+    if (!contract || isLoading) return;
     getListings();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract]);
 
   const getListings = async () => {
+    setIsLoading(true);
     try {
-      if (!!listings.length) throw "Restricting re-fetch";
       const list = await contract.getAllListings();
       setListings(list);
       setIsLoading(false);
@@ -41,6 +41,7 @@ export default function Home() {
         onClose={() => {
           setShowListModal(false);
         }}
+        getListings={getListings}
       />
       <div className={styles.container}>
         <Hero />
