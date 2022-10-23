@@ -5,6 +5,7 @@ import { useAddress, useContract } from "@thirdweb-dev/react";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
+import { RadioButton } from "./RadioButton";
 
 export default function ListModal({ show, onClose }) {
   const [isBrowser, setIsBrowser] = useState(false);
@@ -12,6 +13,7 @@ export default function ListModal({ show, onClose }) {
   const [image, setImage] = useState("");
   const [formData, setFormData] = useState({
     price: "",
+    NFT: "first",
   });
 
   const address = useAddress();
@@ -57,24 +59,33 @@ export default function ListModal({ show, onClose }) {
         <h3 id={styles.meta}>Settings</h3>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.checks}>
-            <input
-              checked
-              type="radio"
-              id="myCheckbox1"
-              name="myradio"
-              hidden
+            <RadioButton
+              changed={handleChange}
+              id="1"
+              isSelected={formData.NFT === "first"}
+              label={
+                <img src="https://gateway.ipfscdn.io/ipfs/QmagA9DymDYWpYZR9AmbFsnpv7MDXJRgm3Y6KSwspozW2L/3d%20peep.png" />
+              }
+              value="first"
             />
-            <label htmlFor="myCheckbox1">
-              <img src="https://gateway.ipfscdn.io/ipfs/QmagA9DymDYWpYZR9AmbFsnpv7MDXJRgm3Y6KSwspozW2L/3d%20peep.png" />
-            </label>
-            <input type="radio" id="myCheckbox2" name="myradio" hidden />
-            <label htmlFor="myCheckbox2">
-              <img src="https://img.seadn.io/files/60c04b8fdac7bc63599741fe54f81ae6.png?fit=max&w=2000" />
-            </label>
-            <input type="radio" id="myCheckbox3" name="myradio" hidden />
-            <label htmlFor="myCheckbox3">
-              <img src="https://i.seadn.io/gae/GF-RZP-1uOyITE_OL6hLDjAHH1jetPDhxbgGwDF6zJeaYmsly5ff2zOU9W5xZdEY1IdE2Ku6YrBI5dVgoH5arQEziGVuKlosx4U4Dic?auto=format&w=1000" />
-            </label>
+            <RadioButton
+              changed={handleChange}
+              id="2"
+              isSelected={formData.NFT === "second"}
+              label={
+                <img src="https://gateway.ipfscdn.io/ipfs/QmagA9DymDYWpYZR9AmbFsnpv7MDXJRgm3Y6KSwspozW2L/3d%20peep.png" />
+              }
+              value="second"
+            />
+            <RadioButton
+              changed={handleChange}
+              id="3"
+              isSelected={formData.NFT === "third"}
+              label={
+                <img src="https://i.seadn.io/gae/GF-RZP-1uOyITE_OL6hLDjAHH1jetPDhxbgGwDF6zJeaYmsly5ff2zOU9W5xZdEY1IdE2Ku6YrBI5dVgoH5arQEziGVuKlosx4U4Dic?auto=format&w=1000" />
+              }
+              value="third"
+            />
           </div>
           <div className="input-group">
             <label className="required" htmlFor="price">
