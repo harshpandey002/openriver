@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from "@/styles/MintModal.module.css";
-import { useAddress, useContract } from "@thirdweb-dev/react";
+import { ConnectWallet, useAddress, useContract } from "@thirdweb-dev/react";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
@@ -81,80 +81,97 @@ export default function MintModal({ show, onClose }) {
         onClick={handleClose}
       />
       <div className={`${styles.modal}  ${show ? styles.showModal : ""}`}>
-        <div className={styles.header}>
-          <span className={styles.title}>
-            <p>Mint Token</p>
-            <p>Contract 0x4C4c...43d9</p>
-          </span>
+        {address ? (
+          <>
+            <div className={styles.header}>
+              <span className={styles.title}>
+                <p>Mint Token</p>
+                <p>Contract 0x4C4c...43d9</p>
+              </span>
 
-          <span onClick={handleClose} id={styles.close}>
-            <AiOutlineClose />
-          </span>
-        </div>
-        <h3 id={styles.meta}>Metadata</h3>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className="input-group">
-            <label className="required" htmlFor="token">
-              Name
-            </label>
-            <input
-              id="token"
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="description">Description</label>
-            <textarea
-              rows={3}
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="image">Media</label>
-            <div className={styles.imageSection}>
-              <div
-                style={{
-                  borderColor: isDragAccept ? "#134cae" : "",
-                  borderWidth: image ? 0 : 1,
-                }}
-                className={styles.dropzone}
-                {...getRootProps()}
-              >
-                <input {...getInputProps()} />
-                {image ? (
-                  <img src={image} alt="NFT Image" />
-                ) : (
-                  <>
-                    <AiOutlineCloudUpload id={styles.uploadIcon} />
-                    <p>Upload Image</p>
-                  </>
-                )}
-              </div>
-              <button onClick={open}>Select File</button>
+              <span onClick={handleClose} id={styles.close}>
+                <AiOutlineClose />
+              </span>
             </div>
-          </div>
-          <div className={styles.cta}>
-            <button onClick={handleClose} disabled={loading} type="button">
-              Close
-            </button>
+            <h3 id={styles.meta}>Metadata</h3>
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <div className="input-group">
+                <label className="required" htmlFor="token">
+                  Name
+                </label>
+                <input
+                  id="token"
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="input-group">
+                <label htmlFor="description">Description</label>
+                <textarea
+                  rows={3}
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="input-group">
+                <label htmlFor="image">Media</label>
+                <div className={styles.imageSection}>
+                  <div
+                    style={{
+                      borderColor: isDragAccept ? "#134cae" : "",
+                      borderWidth: image ? 0 : 1,
+                    }}
+                    className={styles.dropzone}
+                    {...getRootProps()}
+                  >
+                    <input {...getInputProps()} />
+                    {image ? (
+                      <img src={image} alt="NFT Image" />
+                    ) : (
+                      <>
+                        <AiOutlineCloudUpload id={styles.uploadIcon} />
+                        <p>Upload Image</p>
+                      </>
+                    )}
+                  </div>
+                  <button onClick={open}>Select File</button>
+                </div>
+              </div>
+              <div className={styles.cta}>
+                <button onClick={handleClose} disabled={loading} type="button">
+                  Close
+                </button>
 
-            <button disabled={loading} type="submit">
-              {loading ? <Loader /> : <p>Mint NFT</p>}
-            </button>
+                <button disabled={loading} type="submit">
+                  {loading ? <Loader /> : <p>Mint NFT</p>}
+                </button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <div className={styles.header}>
+            <ConnectWallet />
+
+            <span onClick={handleClose} id={styles.close}>
+              <AiOutlineClose />
+            </span>
           </div>
-        </form>
+        )}
       </div>
     </>
   );
 }
 
-function Loader() {
-  return <div class="loader"></div>;
+export function Loader({ rad }) {
+  return (
+    <div
+      style={{ width: rad, height: rad, background: "#f8f8f8" }}
+      className="loader"
+    ></div>
+  );
 }

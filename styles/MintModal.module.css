@@ -18,6 +18,11 @@
   translate: 0 0;
 }
 
+.connect {
+  width: max-content;
+  margin: 0 auto;
+}
+
 .header {
   width: 100%;
   display: flex;

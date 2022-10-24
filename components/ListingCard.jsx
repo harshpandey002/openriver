@@ -1,12 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import { FaEthereum } from "react-icons/fa";
 import styles from "@/styles/ListingCard.module.css";
-import { formatAddress } from "@/helpers/utils";
+import { formatAddress, MARKETPLACE_ADDRESS } from "@/helpers/utils";
 import { ethers } from "ethers";
+import { useAddress, useContract } from "@thirdweb-dev/react";
+import { Loader } from "./MintModal";
 
-export default function ListingCard({ listing }) {
-  const { asset, buyoutPrice, sellerAddress } = listing;
+export default function ListingCard({ listing, dList }) {
+  const { asset, buyoutPrice, sellerAddress, id } = listing;
+  const { contract } = useContract(MARKETPLACE_ADDRESS);
+  const [loading, setLoading] = useState();
+
+  const address = useAddress();
+
+  const handleDlist = async () => {
+    setLoading(true);
+    try {
+      await contract.direct.cancelListing(id);
+      dList(id);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
 
   return (
     <div className={styles.container}>
@@ -21,9 +38,24 @@ export default function ListingCard({ listing }) {
           <FaEthereum />
           <p>{ethers.utils.formatEther(buyoutPrice._hex.toString())}</p>
         </div>
-        <div id={styles.buy}>
-          <button>Buy</button>
-        </div>
+        {loading ? (
+          <div id={styles.buy}>
+            <div className="loader2"></div>
+          </div>
+        ) : (
+          <div id={styles.buy}>
+            {address === sellerAddress && (
+              <button
+                disabled={loading}
+                onClick={handleDlist}
+                id={styles.dlist}
+              >
+                De-List
+              </button>
+            )}
+            <button disabled={loading}>Buy</button>
+          </div>
+        )}
       </div>
     </div>
   );

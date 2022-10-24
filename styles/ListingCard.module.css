@@ -53,24 +53,33 @@
 }
 
 #buy {
-  background: linear-gradient(
+  /* background: linear-gradient(
     135deg,
     rgb(189, 149, 216) 0%,
     rgb(102, 153, 219) 100%
-  );
-  padding: 1px;
+  ); */
   display: flex;
-  border-radius: 4px;
+  gap: 8px;
+  /* border-radius: 4px; */
 }
 
-.footer button {
+#buy button {
   padding: 2px 12px;
   font-size: 14px;
-
   background-color: black;
   border-radius: 4px;
   color: white;
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+#dlist {
+  background-color: #ffffff !important;
+  color: rgb(83, 83, 83) !important;
+}
+
+#dlist:hover {
+  background-color: #f0f0f0 !important;
+  color: rgb(0, 0, 0) !important;
 }

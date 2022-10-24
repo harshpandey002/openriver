@@ -7,6 +7,7 @@ import styles from "@/styles/Home.module.css";
 import { useAddress, useContract } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { MARKETPLACE_ADDRESS } from "@/helpers/utils";
 
 export default function Home() {
   const [listings, setListings] = useState([]);
@@ -17,17 +18,16 @@ export default function Home() {
 
   const address = useAddress();
 
-  const { contract } = useContract(
-    "0x29563a327112f458b25Fb42A52cf081A0C0d51ba"
-  );
+  const { contract } = useContract(MARKETPLACE_ADDRESS);
 
   useEffect(() => {
     if (!contract || isLoading) return;
     getListings();
+    if (!address) return;
     getNFTs();
     getCollectionContract();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contract]);
+  }, [contract, address]);
 
   const getListings = async () => {
     setIsLoading(true);
@@ -121,13 +121,23 @@ export default function Home() {
           <h3>Discover</h3>
           <button onClick={() => setShowListModal(true)}>List Your NFT</button>
         </div>
-        <Listings listings={listings} isLoading={isLoading} />
+        <Listings
+          listings={listings}
+          setListings={setListings}
+          isLoading={isLoading}
+        />
       </div>
     </Layout>
   );
 }
 
-function Listings({ listings, isLoading }) {
+function Listings({ listings, setListings, isLoading }) {
+  const dList = (id) => {
+    let newList = JSON.parse(JSON.stringify(listings));
+    newList = newList.filter((each) => each.id != id);
+    setListings(newList);
+  };
+
   return (
     <div className={styles.listings}>
       {isLoading ? (
@@ -135,7 +145,7 @@ function Listings({ listings, isLoading }) {
       ) : !!listings.length ? (
         <>
           {listings.map((listing) => (
-            <ListingCard key={listing.id} listing={listing} />
+            <ListingCard key={listing.id} listing={listing} dList={dList} />
           ))}
         </>
       ) : (
