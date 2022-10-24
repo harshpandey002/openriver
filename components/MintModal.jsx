@@ -1,23 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
+import { formatAddress } from "@/helpers/utils";
 import styles from "@/styles/MintModal.module.css";
-import { ConnectWallet, useAddress, useContract } from "@thirdweb-dev/react";
+import {
+  ConnectWallet,
+  useAddress,
+  useContract,
+  useSDK,
+} from "@thirdweb-dev/react";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
+import { BiHelpCircle } from "react-icons/bi";
 
-export default function MintModal({ show, onClose }) {
+export default function MintModal({
+  show,
+  onClose,
+  collectionContract,
+  setCollectionContract,
+}) {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     description: "",
   });
+  const sdk = useSDK();
 
   const address = useAddress();
 
-  const { contract: collection } = useContract(
-    "0xC4A0468Cd9c06D1D398E27d7C84758d75564f107"
-  );
+  const { contract: collection } = useContract(collectionContract);
 
   const onDrop = useCallback((acceptedFiles) => {
     handleDrop(acceptedFiles);
@@ -34,9 +45,29 @@ export default function MintModal({ show, onClose }) {
       name: "",
       description: "",
     });
+    setImage("");
     onClose();
   };
 
+  //! Create a new collection on the behalf of user
+  const createCollection = async () => {
+    setLoading(true);
+    try {
+      const contractAddress = await sdk.deployer.deployNFTCollection({
+        name: "OpenRiver",
+        symbol: "RIVR",
+        // this address comes from connected wallet address
+        primary_sale_recipient: address,
+      });
+
+      setCollectionContract(contractAddress);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
+  //! Minting New NFT
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -50,6 +81,7 @@ export default function MintModal({ show, onClose }) {
 
     try {
       await collection.mintTo(address, metadata);
+      handleClose();
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +118,19 @@ export default function MintModal({ show, onClose }) {
             <div className={styles.header}>
               <span className={styles.title}>
                 <p>Mint Token</p>
-                <p>Contract 0x4C4c...43d9</p>
+                {collectionContract ? (
+                  <p>Contract {formatAddress(collectionContract)}</p>
+                ) : (
+                  <>
+                    {loading ? (
+                      <div className="loader2"></div>
+                    ) : (
+                      <button onClick={createCollection} id={styles.create}>
+                        Create Collection
+                      </button>
+                    )}
+                  </>
+                )}
               </span>
 
               <span onClick={handleClose} id={styles.close}>
@@ -142,13 +186,37 @@ export default function MintModal({ show, onClose }) {
                   <button onClick={open}>Select File</button>
                 </div>
               </div>
-              <div className={styles.cta}>
+              {!collectionContract && (
+                <div
+                  style={{
+                    marginTop: "auto",
+                    fontSize: 14,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                >
+                  <BiHelpCircle
+                    style={{
+                      fontSize: 16,
+                    }}
+                  />
+                  <p>
+                    You need to create the collection first before minting any
+                    token
+                  </p>
+                </div>
+              )}
+              <div
+                style={{ marginTop: collectionContract ? "auto" : 0 }}
+                className={styles.cta}
+              >
                 <button onClick={handleClose} disabled={loading} type="button">
                   Close
                 </button>
 
-                <button disabled={loading} type="submit">
-                  {loading ? <Loader /> : <p>Mint NFT</p>}
+                <button disabled={loading || !collectionContract} type="submit">
+                  {loading && collectionContract ? <Loader /> : <p>Mint NFT</p>}
                 </button>
               </div>
             </form>
@@ -167,11 +235,6 @@ export default function MintModal({ show, onClose }) {
   );
 }
 
-export function Loader({ rad }) {
-  return (
-    <div
-      style={{ width: rad, height: rad, background: "#f8f8f8" }}
-      className="loader"
-    ></div>
-  );
+export function Loader() {
+  return <div className="loader"></div>;
 }

@@ -30,8 +30,6 @@ export default function ListModal({ show, onClose, getListings, nfts }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(nfts[formData.NFT]);
-
     const listing = {
       assetContractAddress: nfts[formData.NFT].value.tokenAddress,
       // token ID of the asset you want to list

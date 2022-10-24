@@ -13,7 +13,6 @@ export default function Home() {
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showListModal, setShowListModal] = useState(false);
-  const [collectionContract, setCollectionContract] = useState("");
   const [nfts, setNfts] = useState([]);
 
   const address = useAddress();
@@ -25,10 +24,10 @@ export default function Home() {
     getListings();
     if (!address) return;
     getNFTs();
-    getCollectionContract();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract, address]);
 
+  //! Fetch all listings
   const getListings = async () => {
     setIsLoading(true);
     try {
@@ -41,6 +40,7 @@ export default function Home() {
     }
   };
 
+  //! Fetch NFTS for Creating Listing
   const getNFTs = async () => {
     const url = `https://deep-index.moralis.io/api/v2/${address}/nft?chain=mumbai&format=decimal`;
 
@@ -53,43 +53,24 @@ export default function Home() {
             "8SdNPyuDmzLJLVhYIWuchPbkjSQ9CWuBNxrA4ZWjyj6dozJKqWpEqM2uyCJJSTdt",
         },
       });
+
       const data = await res.json();
 
-      setNfts(
-        data.result.map((each) => ({
-          // label: JSON.parse(each.metadata).image,
-          label: JSON.parse(each.metadata),
-          value: {
-            tokenId: each.token_id,
-            tokenAddress: each.token_address,
-          },
-        }))
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      let nfts = [];
 
-  const getCollectionContract = async () => {
-    const url = `https://deep-index.moralis.io/api/v2/${address}/nft/collections?chain=mumbai`;
-
-    try {
-      const res = await fetch(url, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          "X-API-Key":
-            "8SdNPyuDmzLJLVhYIWuchPbkjSQ9CWuBNxrA4ZWjyj6dozJKqWpEqM2uyCJJSTdt",
-        },
-      });
-      const data = await res.json();
-      let collectionAddr = "";
       data.result.forEach((each) => {
-        if (each.symbol === "RIVR") {
-          collectionAddr = each.token_address;
+        if (!!each.metadata) {
+          nfts.push({
+            // label: JSON.parse(each.metadata).image,
+            label: JSON.parse(each.metadata),
+            value: {
+              tokenId: each.token_id,
+              tokenAddress: each.token_address,
+            },
+          });
         }
       });
-      setCollectionContract(collectionAddr);
+      setNfts(nfts);
     } catch (error) {
       console.log(error);
     }

@@ -1,10 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import styles from "@/styles/MintModal.module.css";
 import { ThirdwebNftMedia } from "@thirdweb-dev/react";
 
 export const RadioButton = (props) => {
   const { changed, id, isSelected, label } = props;
-
   return (
     <div>
       <input
@@ -17,7 +15,7 @@ export const RadioButton = (props) => {
         hidden
       />
       <label htmlFor={id}>
-        <ThirdwebNftMedia metadata={label} />
+        <ThirdwebNftMedia metadata={label || {}} />
       </label>
     </div>
   );

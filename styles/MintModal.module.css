@@ -30,6 +30,10 @@
   justify-content: space-between;
 }
 
+.header button {
+  border-radius: 0 !important;
+}
+
 .title p {
   font-weight: 500;
   line-height: 1.4;
@@ -78,7 +82,7 @@
 }
 
 .cta {
-  margin-top: auto;
+  /* margin-top: auto; */
   margin-left: auto;
   display: flex;
   gap: 16px;
@@ -159,9 +163,10 @@
   align-items: center;
   gap: 12px;
 }
-.imageSection button {
+.imageSection button,
+#create {
   padding: 4px 12px;
-  border-radius: 4px;
+  border-radius: 4px !important;
   background-color: var(--primary);
   border: none;
   cursor: pointer;
