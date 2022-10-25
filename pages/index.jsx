@@ -14,6 +14,7 @@ export default function Home() {
     showListModal,
     setShowListModal,
     nfts,
+    setShowMintModal,
     getListings,
   } = useDataContext();
 
@@ -25,6 +26,7 @@ export default function Home() {
           setShowListModal(false);
         }}
         nfts={nfts}
+        setShowMintModal={setShowMintModal}
         getListings={getListings}
       />
       <div className={styles.container}>

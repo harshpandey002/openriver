@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { MARKETPLACE_ADDRESS } from "@/helpers/utils";
 import { useAddress, useContract } from "@thirdweb-dev/react";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -22,16 +23,16 @@ function DataProvider({ children }) {
   useEffect(() => {
     if (!contract || isLoading) return;
     getListings();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract]);
 
   useEffect(() => {
     if (!address) return;
     getCollectionContract();
-    if (!collection) return;
+  }, [address]);
+
+  useEffect(() => {
+    if (!collection || !address) return;
     getNFTs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, collection]);
 
   //! Fetch all listings
@@ -69,39 +70,6 @@ function DataProvider({ children }) {
     } catch (error) {
       console.log(error);
     }
-
-    // const url = `https://deep-index.moralis.io/api/v2/${address}/nft?chain=mumbai&format=decimal`;
-
-    // try {
-    //   const res = await fetch(url, {
-    //     method: "GET",
-    //     headers: {
-    //       accept: "application/json",
-    //       "X-API-Key":
-    //         "8SdNPyuDmzLJLVhYIWuchPbkjSQ9CWuBNxrA4ZWjyj6dozJKqWpEqM2uyCJJSTdt",
-    //     },
-    //   });
-
-    //   const data = await res.json();
-
-    //   let nfts = [];
-
-    //   data.result.forEach((each) => {
-    //     if (!!each.metadata) {
-    //       nfts.push({
-    //         // label: JSON.parse(each.metadata).image,
-    //         label: JSON.parse(each.metadata),
-    //         value: {
-    //           tokenId: each.token_id,
-    //           tokenAddress: each.token_address,
-    //         },
-    //       });
-    //     }
-    //   });
-    //   setNfts(nfts);
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   //! Fetch Collection Contract to mint NFT

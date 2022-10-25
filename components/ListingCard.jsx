@@ -1,11 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
-import { FaEthereum } from "react-icons/fa";
-import styles from "@/styles/ListingCard.module.css";
 import { formatAddress, MARKETPLACE_ADDRESS } from "@/helpers/utils";
-import { ethers } from "ethers";
+import styles from "@/styles/ListingCard.module.css";
 import { useAddress, useContract } from "@thirdweb-dev/react";
-import { Loader } from "./MintModal";
+import { ethers } from "ethers";
+import { useState } from "react";
+import { FaEthereum } from "react-icons/fa";
 
 export default function ListingCard({ listing, dList }) {
   const { asset, buyoutPrice, sellerAddress, id } = listing;

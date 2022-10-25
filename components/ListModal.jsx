@@ -5,9 +5,16 @@ import styles from "@/styles/MintModal.module.css";
 import { ConnectWallet, useAddress, useContract } from "@thirdweb-dev/react";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { BiHelpCircle } from "react-icons/bi";
 import { RadioButton } from "./RadioButton";
 
-export default function ListModal({ show, onClose, getListings, nfts }) {
+export default function ListModal({
+  show,
+  onClose,
+  getListings,
+  nfts,
+  setShowMintModal,
+}) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     price: "",
@@ -28,7 +35,7 @@ export default function ListModal({ show, onClose, getListings, nfts }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const listing = {
       assetContractAddress: nfts[formData.NFT].value.tokenAddress,
       // token ID of the asset you want to list
@@ -46,12 +53,13 @@ export default function ListModal({ show, onClose, getListings, nfts }) {
     };
 
     try {
-      const tx = await contract.direct.createListing(listing);
-      console.log(tx);
+      await contract.direct.createListing(listing);
       getListings();
     } catch (error) {
       console.log(error);
     }
+    handleClose();
+    setLoading(false);
   };
 
   const handleChange = (e) => {
@@ -59,6 +67,11 @@ export default function ListModal({ show, onClose, getListings, nfts }) {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleMint = () => {
+    handleClose();
+    setShowMintModal(true);
   };
 
   return (
@@ -69,56 +82,97 @@ export default function ListModal({ show, onClose, getListings, nfts }) {
       />
       <div className={`${styles.modal}  ${show ? styles.showModal : ""}`}>
         {address ? (
-          <>
+          !nfts.length ? (
             <div className={styles.header}>
               <span className={styles.title}>
                 <p>List For Sale</p>
+                <p>
+                  <span id={styles.headerLink} onClick={handleMint}>
+                    Create collection and mint NFT first to
+                  </span>
+                  <br /> Create a listing
+                </p>
               </span>
 
               <span onClick={handleClose} id={styles.close}>
                 <AiOutlineClose />
               </span>
             </div>
-            <h3 id={styles.meta}>Settings</h3>
-            <form onSubmit={handleSubmit} className={styles.form}>
-              <div className={styles.checks}>
-                {nfts.map((each, i) => (
-                  <RadioButton
-                    key={i + 1}
-                    changed={handleChange}
-                    id={i + 1}
-                    isSelected={formData.NFT == i}
-                    label={each.label}
+          ) : (
+            <>
+              <div className={styles.header}>
+                <span className={styles.title}>
+                  <p>List For Sale</p>
+                </span>
+
+                <span onClick={handleClose} id={styles.close}>
+                  <AiOutlineClose />
+                </span>
+              </div>
+              <h3 id={styles.meta}>Settings</h3>
+              <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.checks}>
+                  {nfts.map((each, i) => (
+                    <RadioButton
+                      key={i + 1}
+                      changed={handleChange}
+                      id={i + 1}
+                      isSelected={formData.NFT == i}
+                      label={each.label}
+                    />
+                  ))}
+                </div>
+                <div className="input-group">
+                  <label className="required" htmlFor="price">
+                    Listing Price
+                  </label>
+                  <input
+                    id="price"
+                    type="number"
+                    name="price"
+                    value={formData.price}
+                    onChange={handleChange}
+                    required
                   />
-                ))}
-              </div>
-              <div className="input-group">
-                <label className="required" htmlFor="price">
-                  Listing Price
-                </label>
-                <input
-                  id="price"
-                  type="number"
-                  min={1}
-                  name="price"
-                  value={formData.price}
-                  onChange={handleChange}
-                  required
-                />
-                <p>The price of each token you are listing for sale.</p>
-              </div>
+                  <p>The price of each token you are listing for sale.</p>
+                </div>
+                <div
+                  style={{
+                    marginTop: "auto",
+                    fontSize: 14,
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 4,
+                  }}
+                >
+                  <BiHelpCircle
+                    style={{
+                      minWidth: 20,
+                      minHeight: 20,
+                    }}
+                  />
+                  <p>
+                    2 Transaction will take place to List the NFT. Keep an eye
+                    on the metamask extension icon if its not prompted
+                    automatically.
+                  </p>
+                </div>
+                <div className={styles.cta}>
+                  <button
+                    onClick={handleClose}
+                    disabled={loading}
+                    type="button"
+                  >
+                    Close
+                  </button>
 
-              <div className={styles.cta}>
-                <button onClick={handleClose} disabled={loading} type="button">
-                  Close
-                </button>
-
-                <button disabled={loading} type="submit">
-                  {loading ? <Loader /> : <p>List For Sale</p>}
-                </button>
-              </div>
-            </form>
-          </>
+                  <button disabled={loading} type="submit">
+                    {loading ? <Loader /> : <p>List For Sale</p>}
+                  </button>
+                </div>
+              </form>
+            </>
+          )
         ) : (
           <div className={styles.header}>
             <ConnectWallet />
