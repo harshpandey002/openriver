@@ -3,9 +3,8 @@
 import { MARKETPLACE_ADDRESS } from "@/helpers/utils";
 import styles from "@/styles/MintModal.module.css";
 import { ConnectWallet, useAddress, useContract } from "@thirdweb-dev/react";
-import { useCallback, useEffect, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
+import { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import { RadioButton } from "./RadioButton";
 
 export default function ListModal({ show, onClose, getListings, nfts }) {

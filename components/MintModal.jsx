@@ -119,7 +119,7 @@ export default function MintModal({
               <span className={styles.title}>
                 <p>Mint Token</p>
                 {collectionContract ? (
-                  <p>Contract {formatAddress(collectionContract)}</p>
+                  <p>Collection {formatAddress(collectionContract)}</p>
                 ) : (
                   <>
                     {loading ? (
