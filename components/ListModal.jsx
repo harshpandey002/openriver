@@ -188,5 +188,5 @@ export default function ListModal({
 }
 
 function Loader() {
-  return <div class="loader"></div>;
+  return <div className="loader"></div>;
 }

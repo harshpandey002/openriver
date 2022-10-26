@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { MARKETPLACE_ADDRESS } from "@/helpers/utils";
-import { useAddress, useContract } from "@thirdweb-dev/react";
+import { useAddress, useContract, useSDK } from "@thirdweb-dev/react";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const dataContext = createContext();
@@ -9,15 +9,16 @@ export const useDataContext = () => useContext(dataContext);
 function DataProvider({ children }) {
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
   const [showListModal, setShowListModal] = useState(false);
   const [nfts, setNfts] = useState([]);
   const [showMintModal, setShowMintModal] = useState(false);
   const [collectionContract, setCollectionContract] = useState("");
 
   const address = useAddress();
+  const sdk = useSDK();
 
   const { contract } = useContract(MARKETPLACE_ADDRESS);
-
   const { contract: collection } = useContract(collectionContract);
 
   useEffect(() => {
@@ -72,6 +73,24 @@ function DataProvider({ children }) {
     }
   };
 
+  //! Create a new collection on the behalf of user
+  const createCollection = async () => {
+    setIsCreating(true);
+    try {
+      const contractAddress = await sdk.deployer.deployNFTCollection({
+        name: "OpenRiver",
+        symbol: "RIVR",
+        // this address comes from connected wallet address
+        primary_sale_recipient: address,
+      });
+
+      setCollectionContract(contractAddress);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsCreating(false);
+  };
+
   //! Fetch Collection Contract to mint NFT
   const getCollectionContract = async () => {
     const url = `https://deep-index.moralis.io/api/v2/${address}/nft/collections?chain=mumbai`;
@@ -103,10 +122,13 @@ function DataProvider({ children }) {
     getListings,
     getNFTs,
     getCollectionContract,
+    createCollection,
     listings,
     setListings,
     isLoading,
     setIsLoading,
+    isCreating,
+    setIsCreating,
     showListModal,
     setShowListModal,
     nfts,

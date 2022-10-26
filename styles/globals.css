@@ -130,6 +130,8 @@ textarea:focus {
   box-shadow: 9999px 0 0 -5px var(--dot-color);
   animation: dotPulse 1.5s infinite linear;
   animation-delay: 0.25s;
+  margin: 0 auto;
+  margin-top: 2rem;
 }
 
 .dot-pulse::before,

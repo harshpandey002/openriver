@@ -37,6 +37,94 @@
     rgba(225, 199, 242, 1) 0%,
     rgba(156, 199, 255, 1) 100%
   );
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta {
+  /* margin-bottom: 2rem; */
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.buttonCard {
+  height: 120px;
+  width: 300px;
+  padding: 12px;
+  /* background-color: #ffffff0d; */
+  background-color: #ffffffd8;
+  border: 1px solid #e2e2e26b;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 2;
+  position: relative;
+}
+
+.buttonCard span {
+  display: flex;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.buttonCard span div::after {
+  background-color: #f6f6fe;
+}
+
+.buttonCard:hover span div::after {
+  background-color: #ffffff;
+}
+
+.buttonCard:hover {
+  background-color: #ffffff;
+}
+
+.hollow {
+  background-color: #ffffff69 !important;
+  cursor: initial;
+}
+
+.hollow h4,
+.hollow p {
+  color: gray !important;
+}
+
+.buttonCard h4 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #414040;
+}
+
+.buttonCard:hover h4 {
+  color: black;
+}
+
+.buttonCard p {
+  font-size: 14px;
+  color: #424242;
+}
+
+.dashed {
+  position: relative;
+  height: 100%;
+  width: 2rem;
+}
+
+.dashed::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  border-top: 2px dashed #ffffff4e;
+  top: 50%;
+  left: 0;
+  z-index: 1;
+  translate: 0 -50%;
 }
 
 #astroLeft,

@@ -1,30 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
+import { useDataContext } from "@/context/dataContext";
 import { formatAddress } from "@/helpers/utils";
 import styles from "@/styles/MintModal.module.css";
-import {
-  ConnectWallet,
-  useAddress,
-  useContract,
-  useSDK,
-} from "@thirdweb-dev/react";
-import { useCallback, useEffect, useState } from "react";
+import { ConnectWallet, useAddress, useContract } from "@thirdweb-dev/react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
 import { BiHelpCircle } from "react-icons/bi";
 
-export default function MintModal({
-  show,
-  onClose,
-  collectionContract,
-  setCollectionContract,
-}) {
-  const [loading, setLoading] = useState(false);
+export default function MintModal({ show, onClose, collectionContract }) {
   const [image, setImage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     description: "",
   });
-  const sdk = useSDK();
+
+  const { createCollection, isCreating, setIsCreating, getNFTs } =
+    useDataContext();
 
   const address = useAddress();
 
@@ -49,28 +41,10 @@ export default function MintModal({
     onClose();
   };
 
-  //! Create a new collection on the behalf of user
-  const createCollection = async () => {
-    setLoading(true);
-    try {
-      const contractAddress = await sdk.deployer.deployNFTCollection({
-        name: "OpenRiver",
-        symbol: "RIVR",
-        // this address comes from connected wallet address
-        primary_sale_recipient: address,
-      });
-
-      setCollectionContract(contractAddress);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
-
   //! Minting New NFT
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setIsCreating(true);
 
     const { name, description } = formData;
     const metadata = {
@@ -82,10 +56,11 @@ export default function MintModal({
     try {
       await collection.mintTo(address, metadata);
       handleClose();
+      getNFTs();
     } catch (error) {
       console.log(error);
     }
-    setLoading(false);
+    setIsCreating(false);
   };
 
   const handleDrop = (acceptedFiles) => {
@@ -122,7 +97,7 @@ export default function MintModal({
                   <p>Collection {formatAddress(collectionContract)}</p>
                 ) : (
                   <>
-                    {loading ? (
+                    {isCreating ? (
                       <div className="loader2"></div>
                     ) : (
                       <button onClick={createCollection} id={styles.create}>
@@ -211,12 +186,23 @@ export default function MintModal({
                 style={{ marginTop: collectionContract ? "auto" : 0 }}
                 className={styles.cta}
               >
-                <button onClick={handleClose} disabled={loading} type="button">
+                <button
+                  onClick={handleClose}
+                  disabled={isCreating}
+                  type="button"
+                >
                   Close
                 </button>
 
-                <button disabled={loading || !collectionContract} type="submit">
-                  {loading && collectionContract ? <Loader /> : <p>Mint NFT</p>}
+                <button
+                  disabled={isCreating || !collectionContract}
+                  type="submit"
+                >
+                  {isCreating && collectionContract ? (
+                    <Loader />
+                  ) : (
+                    <p>Mint NFT</p>
+                  )}
                 </button>
               </div>
             </form>
