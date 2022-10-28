@@ -2,7 +2,7 @@
 import React from "react";
 import styles from "@/styles/Hero.module.css";
 import { useDataContext } from "@/context/dataContext";
-import { useAddress } from "@thirdweb-dev/react";
+import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
 
 export default function Hero() {
   const {
@@ -38,6 +38,9 @@ export default function Hero() {
             features using DAO. <br /> Create your collection, Mint NFT and list
             for sale.
           </p>
+        </div>
+        <div className={styles.wallet}>
+          <ConnectWallet />
         </div>
       </div>
       <div className={styles.gradient}>
@@ -77,7 +80,7 @@ export default function Hero() {
             ) : (
               <p>
                 You need to <strong>Connect your wallet</strong> in order to
-                interact with the marketplace .
+                interact with the marketplace.
               </p>
             )}
             <div className={styles.cta}>
