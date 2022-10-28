@@ -37,3 +37,9 @@
   border-radius: 0;
   outline: none !important;
 }
+
+@media only screen and (max-width: 680px) {
+  .links {
+    display: none;
+  }
+}

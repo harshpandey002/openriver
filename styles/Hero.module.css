@@ -145,3 +145,63 @@
   transform: translate(20%, 10%);
   width: 120px;
 }
+
+.wallet button {
+  border-radius: 4px;
+}
+
+@media only screen and (min-width: 680px) {
+  .wallet {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .text {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .left,
+  .right {
+    width: 100%;
+  }
+
+  .gradient {
+    height: max-content;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .gradient > p {
+    font-size: 15px;
+    padding-block: 8px;
+  }
+
+  .cta {
+    flex-direction: column;
+  }
+
+  .dashed {
+    width: 2px;
+    height: 20px;
+  }
+
+  .dashed::after {
+    width: 100%;
+    height: 100%;
+    border-top: none;
+    border-left: 2px dashed #ffffff6b;
+    top: 0%;
+    left: 50%;
+    translate: -50% 0%;
+  }
+
+  #astroLeft,
+  #astroRight {
+    display: none;
+  }
+}
