@@ -1,7 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { MARKETPLACE_ADDRESS } from "@/helpers/utils";
-import { useAddress, useContract, useSDK } from "@thirdweb-dev/react";
+import {
+  useAddress,
+  useContract,
+  useNetworkMismatch,
+  useSDK,
+} from "@thirdweb-dev/react";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNetwork, ChainId } from "@thirdweb-dev/react";
 
 export const dataContext = createContext();
 export const useDataContext = () => useContext(dataContext);
@@ -14,6 +20,8 @@ function DataProvider({ children }) {
   const [nfts, setNfts] = useState([]);
   const [showMintModal, setShowMintModal] = useState(false);
   const [collectionContract, setCollectionContract] = useState("");
+  const [, switchNetwork] = useNetwork();
+  const isMismatched = useNetworkMismatch();
 
   const address = useAddress();
   const sdk = useSDK();

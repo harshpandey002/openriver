@@ -17,7 +17,6 @@ export default function Home() {
     setShowMintModal,
     getListings,
   } = useDataContext();
-
   return (
     <Layout>
       <ListModal
@@ -31,6 +30,7 @@ export default function Home() {
       />
       <div className={styles.container}>
         <Hero />
+
         <div className={styles.heading}>
           <h2>
             Trending NFTs <br />
