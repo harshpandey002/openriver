@@ -2,6 +2,7 @@
 import React from "react";
 import styles from "@/styles/Hero.module.css";
 import { useDataContext } from "@/context/dataContext";
+import { useAddress } from "@thirdweb-dev/react";
 
 export default function Hero() {
   const {
@@ -12,6 +13,8 @@ export default function Hero() {
     isCreating,
     nfts,
   } = useDataContext();
+
+  const address = useAddress();
 
   const mintNft = () => {
     setShowMintModal(true);
@@ -66,12 +69,24 @@ export default function Hero() {
           </div>
         ) : (
           <>
-            <p>
-              You need to complete <strong>Creating Collection</strong> and{" "}
-              <strong>Mint NFT</strong> in one go for the first time.
-            </p>
+            {address ? (
+              <p>
+                You need to complete <strong>Creating Collection</strong> and{" "}
+                <strong>Mint NFT</strong> in one go for the first time.
+              </p>
+            ) : (
+              <p>
+                You need to <strong>Connect your wallet</strong> in order to
+                interact with the marketplace .
+              </p>
+            )}
             <div className={styles.cta}>
-              <div onClick={createCollection} className={styles.buttonCard}>
+              <div
+                onClick={createCollection}
+                className={`${styles.buttonCard} ${
+                  address ? "" : styles.hollow
+                }`}
+              >
                 <h4>Create Collection</h4>
                 {isCreating && (
                   <span>

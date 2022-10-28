@@ -2,6 +2,25 @@
   padding: 2rem;
 }
 
+.stripe {
+  background-color: rgb(222, 235, 255);
+  padding: 8px;
+  font-size: 14px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.stripe span {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.stripe span:hover {
+  text-decoration: underline;
+}
+
 .children {
   max-width: 1400px;
   margin: 0 auto;
