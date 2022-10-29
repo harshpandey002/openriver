@@ -52,7 +52,7 @@ export default function ListingCard({ listing, dList }) {
                 De-List
               </button>
             )}
-            <button disabled={loading}>Buy</button>
+            {address && <button disabled={loading}>Buy</button>}
           </div>
         )}
       </div>

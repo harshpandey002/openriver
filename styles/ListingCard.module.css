@@ -3,6 +3,8 @@
   border-radius: 10px;
   box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .img {
@@ -11,6 +13,7 @@
   overflow: hidden;
   scale: 1.07;
   margin: 0 auto;
+  flex-grow: 1;
 }
 
 .img img {
@@ -36,7 +39,7 @@
 }
 
 #creator + p {
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
 .footer {

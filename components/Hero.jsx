@@ -34,9 +34,9 @@ export default function Hero() {
         </div>
         <div className={styles.right}>
           <p>
-            Modern NFT Marketplace using Thirdweb. <br /> Artists can poll for
-            features using DAO. <br /> Create your collection, Mint NFT and list
-            for sale.
+            Modern Thirdweb NFT Marketplace. <br />
+            Create your collection, Build amazing art, <br /> Mint as NFT and
+            list for sale.
           </p>
         </div>
         <div className={styles.wallet}>
