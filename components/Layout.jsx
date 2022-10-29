@@ -8,6 +8,7 @@ import {
   useNetworkMismatch,
 } from "@thirdweb-dev/react";
 import Head from "next/head";
+import { ToastContainer } from "react-toastify";
 import Header from "./Header";
 import MintModal from "./MintModal";
 
@@ -59,7 +60,14 @@ const Layout = ({ title, description, children }) => {
       )}
       <div className={styles.container}>
         <Header setShowMintModal={setShowMintModal} />
-        <div className={styles.children}>{children}</div>
+        <div className={styles.children}>
+          {children}
+          <ToastContainer
+            position="bottom-center"
+            hideProgressBar={false}
+            newestOnTop
+          />
+        </div>
       </div>
       <MintModal
         show={showMintModal}

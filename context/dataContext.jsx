@@ -29,8 +29,6 @@ function DataProvider({ children }) {
   const { contract } = useContract(MARKETPLACE_ADDRESS);
   const { contract: collection } = useContract(collectionContract);
 
-  console.log(address);
-
   useEffect(() => {
     if (!contract || isLoading) return;
     getListings();
@@ -53,7 +51,7 @@ function DataProvider({ children }) {
   const getListings = async () => {
     setIsLoading(true);
     try {
-      const list = await contract.getAllListings();
+      const list = await contract.getActiveListings();
       setListings(list);
       setIsLoading(false);
     } catch (error) {

@@ -62,6 +62,7 @@
     rgb(102, 153, 219) 100%
   ); */
   display: flex;
+  align-items: center;
   gap: 8px;
   /* border-radius: 4px; */
 }
@@ -85,4 +86,9 @@
 #dlist:hover {
   background-color: #f0f0f0 !important;
   color: rgb(0, 0, 0) !important;
+}
+
+.expire {
+  font-size: 14px;
+  color: rgb(83, 83, 83) !important;
 }
