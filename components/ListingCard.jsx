@@ -5,9 +5,10 @@ import { useAddress, useContract } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { useState } from "react";
 import { FaEthereum } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 export default function ListingCard({ listing, dList }) {
-  const { asset, buyoutPrice, sellerAddress, id } = listing;
+  const { asset, buyoutPrice, sellerAddress, id, secondsUntilEnd } = listing;
   const { contract } = useContract(MARKETPLACE_ADDRESS);
   const [loading, setLoading] = useState();
 
@@ -23,6 +24,21 @@ export default function ListingCard({ listing, dList }) {
     }
     setLoading(false);
   };
+
+  const buyListing = async () => {
+    setLoading(true);
+    try {
+      await contract.buyoutListing(id, 1);
+    } catch (error) {
+      console.log(error);
+      toast.error("Some error occured");
+    }
+    setLoading(false);
+  };
+
+  const showBuy =
+    parseInt(secondsUntilEnd._hex.toString(), 16) >
+      Math.floor(new Date().getTime() / 1000) && sellerAddress != address;
 
   return (
     <div className={styles.container}>
@@ -52,7 +68,14 @@ export default function ListingCard({ listing, dList }) {
                 De-List
               </button>
             )}
-            {address && <button disabled={loading}>Buy</button>}
+            {address &&
+              (showBuy ? (
+                <button onClick={buyListing} disabled={loading}>
+                  Buy
+                </button>
+              ) : (
+                <p className={styles.expire}>Expired</p>
+              ))}
           </div>
         )}
       </div>
