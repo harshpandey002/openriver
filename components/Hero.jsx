@@ -24,6 +24,12 @@ export default function Hero() {
     setShowListModal(true);
   };
 
+  const mintText = "Create your art and mint 'images' or 'gif' as NFT.";
+  const collectionText =
+    "Create OpenRiver collection on mumbai testnet. A place to Store minted NFTs.";
+  const listText =
+    "Once NFT is minted, list them on this marketplace for others to buy.";
+
   return (
     <div className={styles.container}>
       <div className={styles.text}>
@@ -51,10 +57,7 @@ export default function Hero() {
           <div className={styles.cta}>
             <div onClick={mintNft} className={styles.buttonCard}>
               <h4>Mint NFT</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Reiciendis, unde?
-              </p>
+              <p>{mintText}</p>
             </div>
             <div className={styles.dashed} />
             <div
@@ -64,10 +67,7 @@ export default function Hero() {
               }`}
             >
               <h4>List For Sale</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Reiciendis, unde?
-              </p>
+              <p>{listText}</p>
             </div>
           </div>
         ) : (
@@ -97,26 +97,17 @@ export default function Hero() {
                   </span>
                 )}
 
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Reiciendis, unde?
-                </p>
+                <p>{collectionText}</p>
               </div>
               <div className={styles.dashed} />
               <div className={`${styles.buttonCard} ${styles.hollow}`}>
                 <h4>Mint NFT</h4>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Reiciendis, unde?
-                </p>
+                <p>{mintText}</p>
               </div>
               <div className={styles.dashed} />
               <div className={`${styles.buttonCard} ${styles.hollow}`}>
                 <h4>List For Sale</h4>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Reiciendis, unde?
-                </p>
+                <p>{listText}</p>
               </div>
             </div>
           </>

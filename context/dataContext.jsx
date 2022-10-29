@@ -29,13 +29,18 @@ function DataProvider({ children }) {
   const { contract } = useContract(MARKETPLACE_ADDRESS);
   const { contract: collection } = useContract(collectionContract);
 
+  console.log(address);
+
   useEffect(() => {
     if (!contract || isLoading) return;
     getListings();
   }, [contract]);
 
   useEffect(() => {
-    if (!address) return;
+    if (!address) {
+      setCollectionContract("");
+      return;
+    }
     getCollectionContract();
   }, [address]);
 
