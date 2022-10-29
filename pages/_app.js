@@ -3,15 +3,8 @@ import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
 import DataProvider from "@/context/dataContext";
 
 function MyApp({ Component, pageProps }) {
-  console.log(ChainId);
-
   return (
-    <ThirdwebProvider
-      desiredChainId={ChainId.Mumbai}
-      chainRpc={{
-        1: "https://eth-goerli.g.alchemy.com/v2/FgxSyMJsZWzvbK0tnARxzOiHsEiq4V5x",
-      }}
-    >
+    <ThirdwebProvider desiredChainId={ChainId.Mumbai}>
       <DataProvider>
         <Component {...pageProps} />
       </DataProvider>
