@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from "@/styles/Footer.module.css";
-import { AiFillInstagram, AiFillYoutube, AiFillMail } from "react-icons/ai";
+import { AiFillInstagram, AiFillYoutube, AiFillGithub } from "react-icons/ai";
 import { FaLinkedinIn, FaTwitter } from "react-icons/fa";
 export default function Footer() {
   const open = (url) => {
@@ -27,9 +27,9 @@ export default function Footer() {
               open("https://www.linkedin.com/in/harsh-kumar-pandey-5ab9071aa/")
             }
           />
-          <AiFillMail
+          <AiFillGithub
             className={styles.icon}
-            onClick={() => open("mailto:abc@coding.harshp@gmail.com")}
+            onClick={() => open("https://github.com/harshpandey002/openriver")}
           />
           <FaTwitter
             className={styles.icon}
