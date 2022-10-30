@@ -10,6 +10,7 @@ import {
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import Header from "./Header";
+import Footer from "./Footer";
 import MintModal from "./MintModal";
 
 const Layout = ({ title, description, children }) => {
@@ -68,6 +69,7 @@ const Layout = ({ title, description, children }) => {
             newestOnTop
           />
         </div>
+        <Footer />
       </div>
       <MintModal
         show={showMintModal}
