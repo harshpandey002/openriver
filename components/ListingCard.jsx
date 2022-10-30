@@ -36,9 +36,11 @@ export default function ListingCard({ listing, dList }) {
     setLoading(false);
   };
 
+  const byAddress = sellerAddress === address;
+
   const showBuy =
     parseInt(secondsUntilEnd._hex.toString(), 16) >
-      Math.floor(new Date().getTime() / 1000) && sellerAddress != address;
+    Math.floor(new Date().getTime() / 1000);
 
   return (
     <div className={styles.container}>
@@ -69,6 +71,7 @@ export default function ListingCard({ listing, dList }) {
               </button>
             )}
             {address &&
+              !byAddress &&
               (showBuy ? (
                 <button onClick={buyListing} disabled={loading}>
                   Buy
