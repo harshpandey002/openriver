@@ -48,6 +48,7 @@ export default function ListingCard({ listing, dList }) {
         <img src={asset.image} alt={asset.name} />
       </div>
       <p id={styles.NFTName}>{asset.name}</p>
+
       <p id={styles.creator}>by {formatAddress(sellerAddress)}</p>
       <p>Current Price</p>
       <div className={styles.footer}>

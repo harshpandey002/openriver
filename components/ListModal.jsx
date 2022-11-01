@@ -43,7 +43,7 @@ export default function ListModal({
       // when should the listing open up for offers
       startTimestamp: new Date(),
       // how long the listing will be open for
-      listingDurationInSeconds: 86400,
+      listingDurationInSeconds: 604800,
       // how many of the asset you want to list
       quantity: 1,
       // address of the currency contract that will be used to pay for the listing
