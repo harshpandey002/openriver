@@ -3,11 +3,11 @@ import { MARKETPLACE_ADDRESS } from "@/helpers/utils";
 import {
   useAddress,
   useContract,
+  useNetwork,
   useNetworkMismatch,
   useSDK,
 } from "@thirdweb-dev/react";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNetwork, ChainId } from "@thirdweb-dev/react";
 
 export const dataContext = createContext();
 export const useDataContext = () => useContext(dataContext);
