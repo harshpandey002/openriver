@@ -23,9 +23,7 @@ export default function Footer() {
         <span>
           <FaLinkedinIn
             className={styles.icon}
-            onClick={() =>
-              open("https://www.linkedin.com/in/harsh-kumar-pandey-5ab9071aa/")
-            }
+            onClick={() => open("https://www.linkedin.com/in/harshpandey002/")}
           />
           <AiFillGithub
             className={styles.icon}
